@@ -11,7 +11,7 @@ type TodoList interface {
 	GetByDate(params todo.TodoParams) ([]todo.TodoList, error)
 	GetByStatus(params todo.TodoParams) ([]todo.TodoList, error)
 	GetByParams(params todo.TodoParams) ([]todo.TodoList, error)
-	Update(id int, updated todo.TodoList) error
+	Update(id int, updated todo.UpdateListInput) error
 	Delete(id int) error
 }
 

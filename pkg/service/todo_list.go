@@ -32,7 +32,10 @@ func (s *TodoListService) GetLists(params todo.TodoParams) ([]todo.TodoList, err
 	return s.repo.GetLists()
 }
 
-func (s *TodoListService) Update(id int, updated todo.TodoList) error {
+func (s *TodoListService) Update(id int, updated todo.UpdateListInput) error {
+	if err := updated.Validate(); err != nil {
+		return err
+	}
 	return s.repo.Update(id, updated)
 }
 

@@ -4,6 +4,7 @@ import (
 	todo "github.com/LittleMikle/sber_it"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"strconv"
 )
 
 func (h *Controller) createList(c *gin.Context) {
@@ -51,9 +52,38 @@ func (h *Controller) getLists(c *gin.Context) {
 }
 
 func (h *Controller) updateList(c *gin.Context) {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		newErrorResponse(c, http.StatusBadRequest, "invalid id param")
+		return
+	}
 
+	var input todo.UpdateListInput
+
+	if err = c.BindJSON(&input); err != nil {
+		newErrorResponse(c, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	if err = h.services.TodoList.Update(id, input); err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	c.JSON(http.StatusOK, statusResponse{"ok"})
 }
 
 func (h *Controller) deleteList(c *gin.Context) {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		newErrorResponse(c, http.StatusBadRequest, "invalid id param")
+		return
+	}
 
+	if err = h.services.TodoList.Delete(id); err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	c.JSON(http.StatusOK, statusResponse{"ok"})
 }

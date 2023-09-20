@@ -8,7 +8,7 @@ import (
 type TodoList interface {
 	Create(list todo.TodoList) (int, error)
 	GetLists(params todo.TodoParams) ([]todo.TodoList, error)
-	Update(id int, updated todo.TodoList) error
+	Update(id int, updated todo.UpdateListInput) error
 	Delete(id int) error
 }
 

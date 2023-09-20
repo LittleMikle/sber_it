@@ -12,8 +12,5 @@ func validateInput(input todo.TodoList) error {
 	if input.Date == "" {
 		return errors.New("date can't be empty")
 	}
-	//if input.Status != "done" && input.Status != "undone" {
-	//	return errors.New("status done or undone only")
-	//}
 	return nil
 }

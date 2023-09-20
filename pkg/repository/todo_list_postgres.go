@@ -4,6 +4,7 @@ import (
 	"fmt"
 	todo "github.com/LittleMikle/sber_it"
 	"github.com/jmoiron/sqlx"
+	"strings"
 )
 
 type TodoListPostgres struct {
@@ -71,10 +72,48 @@ func (r *TodoListPostgres) GetByParams(params todo.TodoParams) ([]todo.TodoList,
 	return lists, nil
 }
 
-func (r *TodoListPostgres) Update(id int, updated todo.TodoList) error {
-	return nil
+func (r *TodoListPostgres) Update(id int, updated todo.UpdateListInput) error {
+	setValues := make([]string, 0)
+	args := make([]interface{}, 0)
+	argId := 1
+
+	if updated.Title != nil {
+		setValues = append(setValues, fmt.Sprintf("title=$%d", argId))
+		args = append(args, *updated.Title)
+		argId++
+	}
+
+	if updated.Description != nil {
+		setValues = append(setValues, fmt.Sprintf("description=$%d", argId))
+		args = append(args, *updated.Description)
+		argId++
+	}
+
+	if updated.Date != nil {
+		setValues = append(setValues, fmt.Sprintf("date=$%d", argId))
+		args = append(args, *updated.Date)
+		argId++
+	}
+
+	if updated.Status != nil {
+		setValues = append(setValues, fmt.Sprintf("status=$%d", argId))
+		args = append(args, *updated.Status)
+		argId++
+	}
+
+	setQuery := strings.Join(setValues, ", ")
+	updateQuery := fmt.Sprintf("UPDATE %s SET %s WHERE id=%d",
+		todoListsTable, setQuery, id)
+	_, err := r.db.Exec(updateQuery, args...)
+	return err
 }
 
 func (r *TodoListPostgres) Delete(id int) error {
+	deleteQuery := fmt.Sprintf("DELETE FROM %s  WHERE id=$1",
+		todoListsTable)
+	_, err := r.db.Exec(deleteQuery, id)
+	if err != nil {
+		return err
+	}
 	return nil
 }
