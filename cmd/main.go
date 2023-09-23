@@ -15,6 +15,12 @@ import (
 	"syscall"
 )
 
+// @title Todo App Melushev
+// @description API for SBER
+
+// @host localhost:8081
+// @BasePath /
+
 func main() {
 	err := initConfig()
 	if err != nil {

@@ -1,0 +1,179 @@
+basePath: /
+definitions:
+  controller.errorResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  todo.TodoList:
+    properties:
+      date:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      status:
+        type: string
+      title:
+        type: string
+    type: object
+  todo.UpdateListInput:
+    properties:
+      date:
+        type: string
+      description:
+        type: string
+      status:
+        type: string
+      title:
+        type: string
+    type: object
+host: localhost:8081
+info:
+  contact: {}
+  description: API for SBER
+  title: Todo App Melushev
+paths:
+  /lists:
+    get:
+      consumes:
+      - application/json
+      description: get list
+      operationId: get-list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: integer
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/controller.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/controller.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controller.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/controller.errorResponse'
+      summary: Get List
+      tags:
+      - get
+  /lists/:id:
+    delete:
+      consumes:
+      - application/json
+      description: delete list
+      operationId: delete-list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: integer
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/controller.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/controller.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controller.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/controller.errorResponse'
+      summary: DeleteList
+      tags:
+      - delete
+    put:
+      consumes:
+      - application/json
+      description: update list
+      operationId: update-list
+      parameters:
+      - description: update todolist info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/todo.UpdateListInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: integer
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/controller.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/controller.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controller.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/controller.errorResponse'
+      summary: Update List
+      tags:
+      - update
+  /lists/create:
+    post:
+      consumes:
+      - application/json
+      description: create list
+      operationId: create-list
+      parameters:
+      - description: todolist info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/todo.TodoList'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: integer
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/controller.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/controller.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controller.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/controller.errorResponse'
+      summary: CreateList
+      tags:
+      - create
+swagger: "2.0"

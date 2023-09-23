@@ -7,6 +7,18 @@ import (
 	"strconv"
 )
 
+// @Summary CreateList
+// @Tags create
+// @Description create list
+// @ID create-list
+// @Accept  json
+// @Produce  json
+// @Param input body todo.TodoList true "todolist info"
+// @Success 200 {integer} integer 1
+// @Failure 400,404 {object} errorResponse
+// @Failure 500 {object} errorResponse
+// @Failure default {object} errorResponse
+// @Router /lists/create [post]
 func (h *Controller) createList(c *gin.Context) {
 	var input todo.TodoList
 	err := c.BindJSON(&input)
@@ -35,6 +47,17 @@ type getAllListsResponse struct {
 	Data []todo.TodoList `json:"data"`
 }
 
+// @Summary Get List
+// @Tags get
+// @Description get list
+// @ID get-list
+// @Accept  json
+// @Produce  json
+// @Success 200 {integer} integer 1
+// @Failure 400,404 {object} errorResponse
+// @Failure 500 {object} errorResponse
+// @Failure default {object} errorResponse
+// @Router /lists [get]
 func (h *Controller) getLists(c *gin.Context) {
 	var params todo.TodoParams
 	var pageNum int
@@ -62,6 +85,18 @@ func (h *Controller) getLists(c *gin.Context) {
 	})
 }
 
+// @Summary Update List
+// @Tags update
+// @Description update list
+// @ID update-list
+// @Accept  json
+// @Produce  json
+// @Param input body todo.UpdateListInput true "update todolist info"
+// @Success 200 {integer} integer 1
+// @Failure 400,404 {object} errorResponse
+// @Failure 500 {object} errorResponse
+// @Failure default {object} errorResponse
+// @Router /lists/:id [put]
 func (h *Controller) updateList(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -84,6 +119,17 @@ func (h *Controller) updateList(c *gin.Context) {
 	c.JSON(http.StatusOK, statusResponse{"ok"})
 }
 
+// @Summary DeleteList
+// @Tags delete
+// @Description delete list
+// @ID delete-list
+// @Accept  json
+// @Produce  json
+// @Success 200 {integer} integer 1
+// @Failure 400,404 {object} errorResponse
+// @Failure 500 {object} errorResponse
+// @Failure default {object} errorResponse
+// @Router /lists/:id [delete]
 func (h *Controller) deleteList(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {

@@ -1,8 +1,11 @@
 package controller
 
 import (
+	_ "github.com/LittleMikle/sber_it/docs"
 	"github.com/LittleMikle/sber_it/pkg/service"
 	"github.com/gin-gonic/gin"
+	swaggerfiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 type Controller struct {
@@ -24,6 +27,7 @@ func (h *Controller) InitRoutes() *gin.Engine {
 		lists.PUT("/:id", h.updateList)
 		lists.DELETE("/:id", h.deleteList)
 	}
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 
 	return router
 }
