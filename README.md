@@ -17,10 +17,11 @@
 
 ### Запуск:
 
-docker-compose-up
+**docker-compose-up**
 
 Все стартует:
-![Screenshot from 2023-09-23 22-35-32](https://github.com/LittleMikle/sber_it/assets/101155101/76cafebe-6959-4ed3-b7c2-cac8622e4e65)
+
+![Screenshot from 2023-09-23 23-07-49](https://github.com/LittleMikle/sber_it/assets/101155101/8cb1cbbb-3c8e-4b43-a508-10407607f304)
 
 После запуска применить создание таблиц из файла scheme/scheme.sql
 
@@ -31,7 +32,7 @@ docker-compose-up
 
 ### Тесты:
 
-go test -v ./...
+**go test -v ./...**
 
 ![Screenshot from 2023-09-23 22-44-38](https://github.com/LittleMikle/sber_it/assets/101155101/0d1dc64b-32a4-4478-bdf6-a23bb7dfef23)
 
@@ -45,6 +46,15 @@ go test -v ./...
 
 ![Screenshot from 2023-09-23 22-47-29](https://github.com/LittleMikle/sber_it/assets/101155101/28b12066-1357-4109-a48f-11b5283e0765)
 
+Присутствует валидация входных данных.
+При отсутствии названия списка:
+
+![Screenshot from 2023-09-23 23-10-27](https://github.com/LittleMikle/sber_it/assets/101155101/7e5adc59-f180-4e93-b1aa-cbe8362114c2)
+
+При отстутствии даты:
+
+![Screenshot from 2023-09-23 23-10-54](https://github.com/LittleMikle/sber_it/assets/101155101/6dc47c0b-8ef7-4a4c-ae56-aaeae10173c6)
+
 Изменение сегмента:
 
 ![Screenshot from 2023-09-23 22-49-12](https://github.com/LittleMikle/sber_it/assets/101155101/ad7e6ef1-72fd-4838-82fe-d9d6c56d8ca7)
@@ -52,6 +62,12 @@ go test -v ./...
 Список изменился:
 
 ![Screenshot from 2023-09-23 22-48-50](https://github.com/LittleMikle/sber_it/assets/101155101/4bff62d4-28c8-430a-8d80-e0680f40faaf)
+
+Пагинация выполнена через offset, в реальном проекте нужно использовать другой метод (можно использовать в качестве page token id последней записи, возвращая ответ фронту можно отдельной переменной возвращать id последней записи и фронт сам будет присылать токен при следующем запросе. В результате получится конструкция вида ) 
+
+SELECT id, title, description, date, status FROM todo_lists WHERE id > token (который вернет фронт) 
+ORDER BY id
+LIMIT 3;
 
 Для демонстрации пагинации добавим 5 новых записей (при пагинации выводит по 3 на страницу)
 
