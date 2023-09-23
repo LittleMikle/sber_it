@@ -19,12 +19,12 @@ func (s *TodoListService) Create(list todo.TodoList) (int, error) {
 	return s.repo.Create(list)
 }
 
-func (s *TodoListService) GetLists(params todo.TodoParams) ([]todo.TodoList, error) {
+func (s *TodoListService) GetLists(page int, params todo.TodoParams) ([]todo.TodoList, error) {
 	if params.Date != "" && params.Status == "" {
 		return s.repo.GetByDate(params)
 	}
 	if params.Status != "" && params.Date == "" {
-		return s.repo.GetByStatus(params)
+		return s.repo.GetByStatus(page, params)
 	}
 	if params.Date != "" && params.Status != "" {
 		return s.repo.GetByParams(params)

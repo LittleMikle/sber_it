@@ -52,10 +52,11 @@ func (r *TodoListPostgres) GetByDate(params todo.TodoParams) ([]todo.TodoList, e
 	return lists, nil
 }
 
-func (r *TodoListPostgres) GetByStatus(params todo.TodoParams) ([]todo.TodoList, error) {
+func (r *TodoListPostgres) GetByStatus(page int, params todo.TodoParams) ([]todo.TodoList, error) {
+	var offset = (page - 1) * 3
 	var lists []todo.TodoList
-	getQuery := fmt.Sprintf("SELECT id, title, description, date, status FROM %s WHERE status=$1", todoListsTable)
-	err := r.db.Select(&lists, getQuery, params.Status)
+	getQuery := fmt.Sprintf("SELECT id, title, description, date, status FROM %s WHERE status =$1 ORDER BY id OFFSET $2 LIMIT 3", todoListsTable)
+	err := r.db.Select(&lists, getQuery, params.Status, offset)
 	if err != nil {
 		return lists, fmt.Errorf("failed with get lists by status")
 	}

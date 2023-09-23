@@ -7,3 +7,10 @@ CREATE TABLE todo_lists
     date timestamptz not null,
     status varchar(255) not null
 );
+
+DROP INDEX IF EXISTS idx_date_pagination;
+CREATE INDEX idx_date_pagination ON todo_lists (date, id);
+
+DROP INDEX IF EXISTS idx_date_pagination;
+CREATE INDEX idx_status_pagination ON todo_lists (status, id);
+

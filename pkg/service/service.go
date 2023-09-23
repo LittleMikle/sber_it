@@ -5,9 +5,11 @@ import (
 	"github.com/LittleMikle/sber_it/pkg/repository"
 )
 
+//go:generate mockgen -source=service.go -destination=mock/mock.go
+
 type TodoList interface {
 	Create(list todo.TodoList) (int, error)
-	GetLists(params todo.TodoParams) ([]todo.TodoList, error)
+	GetLists(page int, params todo.TodoParams) ([]todo.TodoList, error)
 	Update(id int, updated todo.UpdateListInput) error
 	Delete(id int) error
 }

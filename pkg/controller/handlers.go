@@ -37,10 +37,21 @@ type getAllListsResponse struct {
 
 func (h *Controller) getLists(c *gin.Context) {
 	var params todo.TodoParams
+	var pageNum int
+	params.Page = c.Query("page")
 	params.Date = c.Query("date")
 	params.Status = c.Query("status")
 
-	lists, err := h.services.TodoList.GetLists(params)
+	if params.Page != "" {
+		id, err := strconv.Atoi(params.Page)
+		if err != nil {
+			newErrorResponse(c, http.StatusBadRequest, "invalid id param")
+			return
+		}
+		pageNum = id
+	}
+
+	lists, err := h.services.TodoList.GetLists(pageNum, params)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return

@@ -39,7 +39,7 @@ func main() {
 		Password: os.Getenv("DB_PASSWORD"),
 	})
 	if err != nil {
-		log.Fatal().Msgf("failed with Postgres connection %w", err)
+		log.Fatal().Msg("failed with Postgres connection")
 	} else {
 		log.Info().Msg("Connection to Postgres successful")
 	}
@@ -67,11 +67,11 @@ func main() {
 
 	err = srv.Shutdown(context.Background())
 	if err != nil {
-		log.Error().Msgf("failed with shutting down %w", err)
+		log.Error().Msg("failed with shutting down")
 	}
 	err = db.Close()
 	if err != nil {
-		log.Error().Msgf("failed with closing DB connection %w", err)
+		log.Error().Msg("failed with closing DB connection")
 	}
 }
 

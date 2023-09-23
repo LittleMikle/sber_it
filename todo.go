@@ -13,6 +13,7 @@ type TodoList struct {
 type TodoParams struct {
 	Date   string
 	Status string
+	Page   string
 }
 
 type UpdateListInput struct {
