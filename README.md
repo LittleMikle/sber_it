@@ -48,6 +48,7 @@
 
 **Присутствует валидация входных данных.**
 
+
 При отсутствии названия списка:
 
 ![Screenshot from 2023-09-23 23-10-27](https://github.com/LittleMikle/sber_it/assets/101155101/7e5adc59-f180-4e93-b1aa-cbe8362114c2)
